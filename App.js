@@ -1,34 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+
+//Pegando Tela de um Sub-Arquivo
+import Home from './src/screens/Home';
 
 export default function App() {
-  /* const [text, onChangeText] = React.useState('');
-  const [number, onChangeNumber] = React.useState(''); */
   
   return (
-    <View style={styles.container}>
-      <Text style={{ color: '#fff' }}>Escolha um dos filtros e realize a busca!</Text>
-
-      <TextInput
-        style={styles.input}
-        /* value={text} */
-        placeholder="Useless Text"
-      />
-      
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar backgroundColor="#2F48D4" barStyle="light-content" />
+      <Home />
+    </>
   );
 }
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#25292e',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    backgroundColor: '#c9c9c9',
-  },
+
+
 });
