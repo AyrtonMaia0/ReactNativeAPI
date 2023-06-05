@@ -9,9 +9,9 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 import api from '../../services/api';
 
 export default function Home() {
-    const [marca, setMarca] = useState('');
-    const [modelo, setModelo] = useState('');
-    const [ano, setAno] = useState('');
+    const [marcaInput, setMarca] = useState('');
+    const [modeloInput, setModelo] = useState('');
+    const [anoInput, setAno] = useState('');
     const [veiculo, setVeiculo] = useState(null);
 
     async function handleBuscar() {
@@ -24,16 +24,17 @@ export default function Home() {
             const marcas = response.data;
             let marcaEncontrada = null;
             for (let i = 0; i < marcas.length; i++) {
-                if (marcas[i].nome.toLowerCase() === marca.toLowerCase()) {
-                marcaEncontrada = marcas[i];
-                console.log(marcaEncontrada.codigo);
-                break;
+                if (marcas[i].nome.toLowerCase() === marcaInput.toLowerCase()) {
+                    marcaEncontrada = marcas[i];
+                    console.log(marcaEncontrada.codigo);
+                    break;
                 }
             }
-            console.log(marca);
-        /* End Marca */
+            console.log(marcaInput);
+            /* End Marca */
+            
 
-        /* Start Modelo */
+            /* Start Modelo */
             //Para Filtrar o Modelo
             
             const res = await api.get(`carros/marcas/${marcaEncontrada.codigo}/modelos`);
@@ -41,14 +42,15 @@ export default function Home() {
             const mod = res.data.modelos;
             let modeloEncontrado = null;
             for (let i = 0; i < mod.length; i++) {
-                if (mod[i].nome.substr(0, 4).toLowerCase() === modelo.substr(0, 4).toLowerCase()) {
-                modeloEncontrado = mod[i];
-                console.log(modeloEncontrado.codigo);
-                break;
+                if (mod[i].nome.substr(0, 4).toLowerCase() === modeloInput.substr(0, 4).toLowerCase()) {
+                    modeloEncontrado = mod[i];
+                    console.log(modeloEncontrado.codigo);
+                    break;
                 }
             }
-            console.log(modelo);
-        /* End Modelo */
+            console.log(modeloInput);
+            /* End Modelo */
+            
 
         /* Start Ano */
             //Para Filtrar o Modelo
@@ -57,13 +59,13 @@ export default function Home() {
             const year = r.data;
             let anoEncontrado = null;
             for (let i = 0; i < year.length; i++) {
-                if (year[i].nome.substr(0, 4).toLowerCase() === ano.substr(0, 4).toLowerCase()) {
-                anoEncontrado = year[i];
-                console.log(anoEncontrado.codigo);
-                break;
+                if (year[i].nome.substr(0, 4).toLowerCase() === anoInput.substr(0, 4).toLowerCase()) {
+                    anoEncontrado = year[i];
+                    console.log(anoEncontrado.codigo);
+                    break;
                 }
             }
-            console.log(ano);
+            console.log(anoInput);
         /* End Ano */
 
             //--
@@ -73,7 +75,7 @@ export default function Home() {
             console.log(data);
 
             if (status != 200 || data.erro) {
-                console.log('Buscar', 'Ocorreu um erro ao buscar os modelos da marca.');
+                console.log('Buscar', 'Ocorreu um erro ao buscar os modelos da marcaInput.');
             } else {
                 setVeiculo(data);
             }
@@ -109,7 +111,7 @@ export default function Home() {
                 onSubmitEditing={handleBuscar}
                 placeholder="Digite a Marca que deseja buscar"
                 placeholderTextColor="#2F48D4"
-                value={marca}
+                value={marcaInput}
             />}
         
             {!veiculo &&
@@ -119,7 +121,7 @@ export default function Home() {
                 onSubmitEditing={handleBuscar}
                 placeholder="Digite o Modelo que deseja buscar"
                 placeholderTextColor="#2F48D4"
-                value={modelo}
+                value={modeloInput}
             />}
         
             {!veiculo &&
@@ -130,13 +132,14 @@ export default function Home() {
                 onSubmitEditing={handleBuscar}
                 placeholder="Digite o Ano que deseja buscar"
                 placeholderTextColor="#2F48D4"
-                value={ano}
+                value={anoInput}
             />}
             
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.8}
                 onPress={veiculo ? handleLimpar : handleBuscar}>
+
                 <Text style={styles.buttonText}>
                     {veiculo ? 'Limpar' : 'Buscar'}
                 </Text>
@@ -178,7 +181,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: '#2F48D4',
+        backgroundColor: '#CCCCFF'/* '#2F48D4' */,
         flex: '1',
         padding: '20px',
       },
@@ -204,7 +207,7 @@ const styles = StyleSheet.create({
 
       button: {
         alignItems: 'center',
-        backgroundColor: '#F6E125',
+        backgroundColor: '#5D3FD3'/* '#F6E125' */,
         borderRadius: '5px',
         marginTop: '20px',
         padding: '8px',
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
       },
 
       buttonText: {
-        color: '#2F48D4',
+        color: '#fff',
         fontSize: '18px',
         fontSeight: 'bold',
         textTransform: 'uppercase',
